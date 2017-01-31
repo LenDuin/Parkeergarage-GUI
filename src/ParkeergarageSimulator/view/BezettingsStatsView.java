@@ -12,5 +12,25 @@ public class BezettingsStatsView extends AbstractView{
     }
 
     public void paintComponent(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.fillRect();
+
+        // int[][][] state = logic.getState();
+
+        // if (state == null) return;
+
+        // wat doet dit?
+    }
+
+    public int CarQueue() {
+        return CarQueue.size();
+    }
+
+    public int AbonnementPlekkenBezet() {
+        AbonnementPlekkenBezet() = SimulatorView.numberOfPassPlaces - SimulatorView.numberOfOpenPassPlaces;
+    }
+
+    public int ReserveringPlekkenBezet() {
+        // hier mot nog wat
     }
 }
