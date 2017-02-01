@@ -10,16 +10,16 @@ public class Parkeergarage {
     private JFrame screen;
     private AbstractView parkeergarageView;
     private AbstractView settingsView;
-    private ParkeergarageLogic parkeergarageLogic;
+    private ParkeergarageLogic logic;
     private AbstractController initController;
     private AbstractController runController;
 
     public Parkeergarage() {
-        parkeergarageLogic = new ParkeergarageLogic();
-        initController = new InitController(parkeergarageLogic);
-        runController = new RunController(parkeergarageLogic);
-        parkeergarageView = new ParkeergarageView(parkeergarageLogic);
-        settingsView = new BezettingsStatsView(parkeergarageLogic);
+        logic = new ParkeergarageLogic();
+        initController = new InitController(logic);
+        runController = new RunController(logic);
+        parkeergarageView = new ParkeergarageView(logic);
+        settingsView = new BezettingsStatsView(logic);
 
         screen = new JFrame("ParkeergarageSimulator");
         screen.setSize(1366, 768);

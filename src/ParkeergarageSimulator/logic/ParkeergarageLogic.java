@@ -14,11 +14,13 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
     private Simulator simulator;
 
     public ParkeergarageLogic() {
-        simulator = new Simulator(cars, spots, rows, floors);
+
     }
 
-    public void setParkeergarage(int floors, int rows, int spots) throws ParkeergarageException {
+    public void setParkeergarage() {
         cars = new Car[floors][rows][spots];
+        simulator = new Simulator(cars, spots, rows, floors);
+        notifyViews();
     }
 
     public void doStep() throws ParkeergarageException {
@@ -42,6 +44,7 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
 
     private void calculateParkeergarage() {
         simulator.tick();
+        notifyViews();
     }
 
 
