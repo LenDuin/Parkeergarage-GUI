@@ -1,60 +1,32 @@
 package ParkeergarageSimulator.logic;
 
 import ParkeergarageSimulator.exception.*;
-import java.util.*;
 
 public class ParkeergarageLogic extends AbstractModel implements Runnable {
-    private int spots;
-    private boolean spotsIsSet;
+    private int spots = 30;
+    private int rows = 6;
+    private int floors = 3;
 
-    private int rows;
-    private boolean rowsIsSet;
-
-    private int floors;
-    private boolean floorsIsSet;
-
-    private boolean initRun;
-
-    private int[][][] parkeergarage;
-    private Random r;
-
+    private Car[][][] cars;
     private int numberOfSteps;
-    private boolean run;
+    private boolean run = false;
+
+    private Simulator simulator;
 
     public ParkeergarageLogic() {
-        spots = 60;
-        rows = 3;
-        floors = 3;
-        spotsIsSet = false;
-        rowsIsSet = false;
-        floorsIsSet = false;
-        r = new Random();
-        run = false;
+        simulator = new Simulator(cars, spots, rows, floors);
     }
 
     public void setParkeergarage(int floors, int rows, int spots) throws ParkeergarageException {
-        parkeergarage = new int[floors][rows][spots];
-        initRun = false;
+        cars = new Car[floors][rows][spots];
     }
 
     public void doStep() throws ParkeergarageException {
-        if (!floorsIsSet || !rowsIsSet || !spotsIsSet) {
-            throw new ParkeergarageException("Parkeergarage not fully set, please check and fix");
-        }
-        if (!initRun) {
-            throw new ParkeergarageException("plx run init ferst");
-        }
         calculateParkeergarage();
         notifyViews();
     }
 
     public void doSteps(int numberOfSteps) throws ParkeergarageException {
-        if (!floorsIsSet || !rowsIsSet || !spotsIsSet) {
-            throw new ParkeergarageException("Parkeergarage not fully set, please check and fix");
-        }
-        if (!initRun) {
-            throw new ParkeergarageException("plx run init ferst");
-        }
         this.numberOfSteps = numberOfSteps;
         run = true;
         new Thread(this).start();
@@ -64,32 +36,26 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
         run = false;
     }
 
-    public int[][][] getState() {
-        return parkeergarage;
-    }
-
-    public void randomInit() throws ParkeergarageException {
-        if (!floorsIsSet || !rowsIsSet || !spotsIsSet) {
-            throw new ParkeergarageException("Parkeergarage not fully set, plx fix");
-        }
-        for (int i = 0; i < floors; i++) {
-            for (int j = 0; j < rows; j++) {
-                for (int k = 0; k < rows; k++) {
-                    if (r.nextInt() <= spots) {
-                        parkeergarage[i][j][k] = 1;
-                    }
-                    else {
-                        parkeergarage[i][j][k] = 0;
-                    }
-                    initRun = true;
-                    notifyViews();
-                }
-            }
-        }
+    public Car[][][] getState() {
+        return cars;
     }
 
     private void calculateParkeergarage() {
-        //TODO: Create this method
+        simulator.tick();
+    }
+
+
+
+    public int getSpots() {
+        return spots;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getFloors() {
+        return floors;
     }
 
     @Override

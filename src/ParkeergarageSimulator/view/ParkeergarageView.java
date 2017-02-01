@@ -14,7 +14,7 @@ public class ParkeergarageView extends AbstractView{
     public void paintComponent(Graphics g) {
 
 
-        int[][][] state = logic.getState();
+        Car[][][] state = logic.getState();
 
         if (state == null) return;
 
@@ -22,11 +22,10 @@ public class ParkeergarageView extends AbstractView{
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
                 for (int k = 0; k < state[j].length; k++) {
-                    if (state[i][j][k] == 1) {
+                    if (state[i][j][k].getHasToPay()) {
                         g.setColor(Color.RED);
                         g.fillRect(margin + 4 * i, margin + 4 * j, 3, 3);
-                    }
-                    if (state[i][j][k] == 2) {
+                    } else {
                         g.setColor(Color.BLUE);
                         g.fillRect(margin + 4 * i, margin + 4 * j, 3, 3);
                     }

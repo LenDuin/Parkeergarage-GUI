@@ -72,7 +72,6 @@ public class InitController extends AbstractController implements ActionListener
 
         try {
             logic.setParkeergarage(f, r, s);
-            logic.randomInit();
         }
         catch (Exception ex) {
             ex.printStackTrace();
