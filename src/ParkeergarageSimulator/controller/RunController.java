@@ -23,7 +23,7 @@ public class RunController extends AbstractController implements ActionListener{
         stepsModel = new SpinnerNumberModel(1,1,1000,1);
         steps = new JSpinner(stepsModel);
         startSteps = new JButton("Start");
-        startSteps.addActionListener(this);;
+        startSteps.addActionListener(this);
         stopSteps = new JButton("Stop");
         stopSteps.addActionListener(this);
 
