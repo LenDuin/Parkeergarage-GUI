@@ -40,7 +40,6 @@ public class RunController extends AbstractController implements ActionListener{
         steps.setBounds(x = x + width, y, width, height);
         startSteps.setBounds(x = x + width, y, width, height);
         stopSteps.setBounds(x = x + width, y, width, height);
-
         setVisible(true);
     }
 
