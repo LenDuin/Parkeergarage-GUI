@@ -5,19 +5,12 @@ import java.util.*;
 
 public class ParkeergarageLogic extends AbstractModel implements Runnable {
     private int spots;
-    private static final int MIN_SPOTS = 1;
-    private static final int MAX_SPOTS = 50;
     private boolean spotsIsSet;
 
     private int rows;
-    private static final int MIN_ROWS = 1;
-    private static final int MAX_ROWS = 10;
     private boolean rowsIsSet;
-    private boolean rowsIsEven;
 
     private int floors;
-    private static final int MIN_FLOORS = 1;
-    private static final int MAX_FLOORS = 10;
     private boolean floorsIsSet;
 
     private boolean initRun;
@@ -29,12 +22,11 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
     private boolean run;
 
     public ParkeergarageLogic() {
-        spots = MIN_SPOTS - 1;
-        rows = MIN_ROWS - 1;
-        floors = MIN_FLOORS - 1;
+        spots = 60;
+        rows = 3;
+        floors = 3;
         spotsIsSet = false;
         rowsIsSet = false;
-        rowsIsEven = rows % 2 == 0;
         floorsIsSet = false;
         r = new Random();
         run = false;
@@ -43,30 +35,6 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
     public void setParkeergarage(int floors, int rows, int spots) throws ParkeergarageException {
         parkeergarage = new int[floors][rows][spots];
         initRun = false;
-    }
-
-    public static int getMinSpots() {
-        return MIN_SPOTS;
-    }
-
-    public static int getMaxSpots() {
-        return MAX_SPOTS;
-    }
-
-    public static int getMinRows() {
-        return MIN_ROWS;
-    }
-
-    public static int getMaxRows() {
-        return MAX_ROWS;
-    }
-
-    public static int getMinFloors() {
-        return MIN_FLOORS;
-    }
-
-    public static int getMaxFloors() {
-        return MAX_FLOORS;
     }
 
     public void doStep() throws ParkeergarageException {
