@@ -1,5 +1,6 @@
 package ParkeergarageSimulator.logic;
 
+import ParkeergarageSimulator.controller.RunController;
 import ParkeergarageSimulator.exception.*;
 
 public class ParkeergarageLogic extends AbstractModel implements Runnable {
@@ -14,7 +15,6 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
     private Simulator simulator;
 
     public ParkeergarageLogic() {
-
     }
 
     public void setParkeergarage() {
@@ -47,8 +47,6 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
         notifyViews();
     }
 
-
-
     public int getSpots() {
         return spots;
     }
@@ -67,7 +65,7 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
             calculateParkeergarage();
             notifyViews();
             try {
-                Thread.sleep(100);
+                Thread.sleep(RunController.getDelay());
             }
             catch (InterruptedException ie) {
                 ie.printStackTrace();

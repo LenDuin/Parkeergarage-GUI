@@ -7,6 +7,7 @@ import ParkeergarageSimulator.logic.*;
 public class InitController extends AbstractController implements ActionListener{
     private static final long serialVersionUID = 8084081366423909672L;
     private JButton init;
+    public static boolean initRun = false;
 
     /**
      * InitController will create the initial view or at least prepare it to be shown on your screen
@@ -26,13 +27,14 @@ public class InitController extends AbstractController implements ActionListener
         int y = 10;
         int width = 70;
         int height = 30;
-        init.setBounds(x , y += (height + 2), width, height);
+        init.setBounds(x , y, width, height);
 
         setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        initRun = true;
         logic.setParkeergarage();
     }
 }

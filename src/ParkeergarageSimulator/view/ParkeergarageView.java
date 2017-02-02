@@ -20,14 +20,14 @@ public class ParkeergarageView extends AbstractView{
             return;
         }
 
-        int hmargin = 20;
+        int hmargin = 5;
         int vmargin = 50;
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
-                if(i>0 && j==0) {
+                if (i > 0 && j == 0) {
                     hmargin += 150;
                 }
-                if(j%2 == 0) {
+                if (j % 2 == 0) {
                     hmargin += 20;
                 }
                 for (int k = 0; k < state[i][j].length; k++) {
@@ -40,8 +40,7 @@ public class ParkeergarageView extends AbstractView{
                             g.setColor(Color.BLUE);
                         }
                     }
-
-                    g.fillRect(hmargin + 20*j, vmargin + 11*k, 15, 10);
+                    g.fillRect(hmargin + 20 * j, vmargin + 11 * k, 15, 10);
                 }
             }
         }

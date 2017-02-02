@@ -5,6 +5,7 @@ import ParkeergarageSimulator.view.*;
 import ParkeergarageSimulator.controller.*;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Parkeergarage {
     private JFrame screen;
@@ -26,13 +27,13 @@ public class Parkeergarage {
         screen.setResizable(false);
         screen.setLayout(null);
         screen.getContentPane().add(parkeergarageView);
-        screen.getContentPane().add(settingsView);
+//        screen.getContentPane().add(settingsView);
         screen.getContentPane().add(runController);
         screen.getContentPane().add(initController);
-        parkeergarageView.setBounds(5,runController.getHeight() + 5,screen.getWidth() - initController.getWidth(), screen.getHeight() - (runController.getHeight() + 45));
-        settingsView.setBounds(5,5,200,200);
-        runController.setBounds(5,5, screen.getWidth(),50);
-        initController.setBounds(screen.getWidth() - (initController.getWidth() + 5), parkeergarageView.getY(),90, screen.getHeight());
+        parkeergarageView.setBounds(5,55,1271, 673);
+//        settingsView.setBounds(0,0,0,0);
+        runController.setBounds(5,5, 500,50);
+        initController.setBounds(1271, 5,90, 768);
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         screen.setVisible(true);
     }

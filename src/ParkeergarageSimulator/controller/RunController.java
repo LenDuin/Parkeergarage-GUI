@@ -14,33 +14,43 @@ public class RunController extends AbstractController implements ActionListener{
     private SpinnerModel stepsModel;
     private JButton startSteps;
     private JButton stopSteps;
+    private static JSpinner delay;
+    private SpinnerModel delayModel;
 
     public RunController(ParkeergarageLogic logic) {
         super(logic);
         setSize(450, 40);
         stepOne = new JButton("One step");
         stepOne.addActionListener(this);
-        stepsModel = new SpinnerNumberModel(1,1,1000,1);
+        stepsModel = new SpinnerNumberModel(1000,1,100000,1);
         steps = new JSpinner(stepsModel);
         startSteps = new JButton("Start");
         startSteps.addActionListener(this);
         stopSteps = new JButton("Stop");
         stopSteps.addActionListener(this);
+        delayModel = new SpinnerNumberModel(10, 0, 1000, 10);
+        delay = new JSpinner(delayModel);
 
         this.setLayout(null);
         add(stepOne);
         add(steps);
         add(startSteps);
         add(stopSteps);
+        add(delay);
         int x = 0;
         int y = 0;
         int width = 90;
         int height = 35;
         stepOne.setBounds(x, y, width, height);
-        steps.setBounds(x = x + width, y, width, height);
-        startSteps.setBounds(x = x + width, y, width, height);
-        stopSteps.setBounds(x = x + width, y, width, height);
+        steps.setBounds(95, y, width, height);
+        startSteps.setBounds(95*2, y, width, height);
+        stopSteps.setBounds(95*3, y, width, height);
+        delay.setBounds(95*4, y, width, height);
         setVisible(true);
+    }
+
+    public static int getDelay() {
+        return (int)delay.getValue();
     }
 
     @Override

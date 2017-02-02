@@ -18,7 +18,7 @@ public class Simulator {
 
     private Car[][][] cars;
 
-    private int numReserved = 180;
+    private int numReserved = 90;
 
     private int numberOfFloors;
     private int numberOfRows;
