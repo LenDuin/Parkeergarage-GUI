@@ -15,8 +15,6 @@ public class InitController extends AbstractController implements ActionListener
      */
     public InitController(ParkeergarageLogic logic) {
         super(logic);
-        setSize(90, 130);
-
         init = new JButton("Init");
 
         init.addActionListener(this);
@@ -29,7 +27,7 @@ public class InitController extends AbstractController implements ActionListener
         int height = 30;
         init.setBounds(x , y, width, height);
 
-        setVisible(true);
+//        setVisible(true);
     }
 
     @Override

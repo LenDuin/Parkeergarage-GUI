@@ -1,5 +1,7 @@
 package ParkeergarageSimulator.logic;
 
+import ParkeergarageSimulator.controller.RunController;
+
 import java.util.*;
 import static java.lang.System.*;
 
@@ -18,7 +20,7 @@ public class Simulator {
 
     private Car[][][] cars;
 
-    private int numReserved = 90;
+    private int numReserved = RunController.getReservations();
 
     private int numberOfFloors;
     private int numberOfRows;
@@ -30,13 +32,16 @@ public class Simulator {
     private int totalVisitors;
 
     private int weekDayArrivals = 100;
-    private int weekendArrivals = 200;
+    private int weekendArrivals = 500;
     private int weekDayPassArrivals = 50;
     private int weekendPassArrivals = 5;
 
     private int enterSpeed = 3;
     private int paymentSpeed = 7;
     private int exitSpeed = 5;
+
+    private double chargePerMinute = 0.07;
+    private double revenue;
 
     public Simulator(Car carsArr[][][], int spots, int rows, int floors) {
         entranceCarQueue = new CarQueue();
@@ -52,10 +57,43 @@ public class Simulator {
 
     public void tick() {
         advanceTime();
+        updateClock();
+        handlePayment();
         handleExit();
         handleEntrance();
         handleCarTime();
         printInfo();
+    }
+
+    public void updateClock() {
+        int minute = getMinute();
+        int hour = getHour();
+        int dayNum = getDay();
+        String dayTxt = "maandag";
+        switch (dayNum) {
+            case 0:
+                dayTxt = "maandag";
+                break;
+            case 1:
+                dayTxt = "dinsdag";
+                break;
+            case 2:
+                dayTxt = "woensdag";
+                break;
+            case 3:
+                dayTxt = "donderdag";
+                break;
+            case 4:
+                dayTxt = "vrijdag";
+                break;
+            case 5:
+                dayTxt = "zaterdag";
+                break;
+            case 6:
+                dayTxt = "zondag";
+                break;
+        }
+        RunController.setClock(dayTxt + ", " + hour + ":" + minute);
     }
 
     private void printInfo() {
@@ -64,18 +102,32 @@ public class Simulator {
             if(prevHour < 0) {
                 prevHour = 23;
             }
-            System.out.println("Visitors between " + prevHour + " and " + hour + ": " + hourVisitors);
+//            System.out.println("Visitors between " + prevHour + " and " + hour + ": " + hourVisitors);
             hourVisitors = 0;
             if(hour == 0) {
                 int prevDay = day - 1;
                 if(prevDay < 0) {
                     prevDay = 6;
                 }
-                System.out.println("Visitors on day " + prevDay + ": " + dayVisitors);
+//                System.out.println("Visitors on day " + prevDay + ": " + dayVisitors);
                 dayVisitors = 0;
                 if(day == 0) {
-                    System.out.println("Visitors in the last week: " + totalVisitors);
+//                    System.out.println("Visitors in the last week: " + totalVisitors);
                     totalVisitors = 0;
+                }
+            }
+        }
+    }
+
+    private void handlePayment() {
+        for (int floor = 0; floor < getNumberOfFloors(); floor++) {
+            for (int row = 0; row < getNumberOfRows(); row++) {
+                for (int place = 0; place < getNumberOfPlaces(); place++) {
+                    Location location = new Location(floor, row, place);
+                    Car car = getCarAt(location);
+                    if (car != null) {
+                        car.setFee(chargePerMinute);
+                    }
                 }
             }
         }
@@ -97,6 +149,7 @@ public class Simulator {
 
     private void advanceTime() {
         // Advance the time by one minute. Shamelessly copied from original project
+//        System.out.println(hour + ":" + minute + ", " + day);
         minute++;
         while (minute > 59) {
             minute -= 60;
@@ -133,7 +186,7 @@ public class Simulator {
     private void carsEntering(CarQueue queue) {
         int i=0;
         Location freeLocation;
-        while (queue.carsInQueue() > 0 && getNumberOfOpenSpots()>0 && i<enterSpeed) {
+        while (queue.carsInQueue() > 0 && getNumberOfOpenSpots() > 0 && i < enterSpeed) {
             Car car = queue.removeCar();
             if(car.getHasToPay()) {
                 freeLocation = getFirstFreeLocation(numReserved);
@@ -163,10 +216,11 @@ public class Simulator {
 
     private void carsPaying() {
         int i=0;
-        while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed) {
+        while (paymentCarQueue.carsInQueue() > 0 && i < paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
-            //TODO: Handle payment.
-            carLeavesSpot(car);
+            if (car.getFee() <= 0) {
+                carLeavesSpot(car);
+            }
             i++;
         }
     }
@@ -212,7 +266,6 @@ public class Simulator {
         removeCarAt(car.getLocation());
         exitCarQueue.addCar(car);
     }
-
 
     public int getNumberOfFloors() {
         return numberOfFloors;
@@ -278,7 +331,6 @@ public class Simulator {
         }
         return null;
     }
-
 
     public Location getFirstFreeLocation(int numRes) {
         int i = 0;

@@ -7,6 +7,7 @@ public abstract class Car {
     private int minutesLeft;
     private boolean isPaying;
     private boolean hasToPay;
+    private double fee;
 
     /**
      * Constructor for objects of class Car
@@ -84,6 +85,14 @@ public abstract class Car {
      */
     public void setHasToPay(boolean hasToPay) {
         this.hasToPay = hasToPay;
+    }
+
+    public double getFee() {
+        return fee;
+    }
+
+    public void setFee(double chargingRate) {
+        fee = minutesLeft * chargingRate;
     }
 
     /**

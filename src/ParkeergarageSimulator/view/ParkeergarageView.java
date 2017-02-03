@@ -8,12 +8,9 @@ public class ParkeergarageView extends AbstractView{
 
     public ParkeergarageView(ParkeergarageLogic logic) {
         super(logic);
-        setSize(200,200);
     }
 
     public void paintComponent(Graphics g) {
-
-
         Car[][][] state = logic.getState();
 
         if (state == null) {

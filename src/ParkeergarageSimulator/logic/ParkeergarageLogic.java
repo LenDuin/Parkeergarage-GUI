@@ -14,8 +14,7 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
 
     private Simulator simulator;
 
-    public ParkeergarageLogic() {
-    }
+    public ParkeergarageLogic() {}
 
     public void setParkeergarage() {
         cars = new Car[floors][rows][spots];
