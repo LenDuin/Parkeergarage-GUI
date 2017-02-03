@@ -31,11 +31,7 @@ public class ParkeergarageView extends AbstractView{
                     if (state[i][j][k] == null) {
                         g.setColor(Color.WHITE);
                     } else {
-                        if (state[i][j][k].getHasToPay()) {
-                            g.setColor(Color.RED);
-                        } else {
-                            g.setColor(Color.BLUE);
-                        }
+                        g.setColor(state[i][j][k].getColor());
                     }
                     g.fillRect(hmargin + 20 * j, vmargin + 11 * k, 15, 10);
                 }
