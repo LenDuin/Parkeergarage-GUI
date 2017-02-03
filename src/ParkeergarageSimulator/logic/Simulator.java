@@ -28,6 +28,7 @@ public class Simulator {
     private int hourVisitors;
     private int dayVisitors;
     private int totalVisitors;
+    private int moneyMade;
 
     private int weekDayArrivals = 100;
     private int weekendArrivals = 200;
@@ -74,8 +75,8 @@ public class Simulator {
                 System.out.println("Visitors on day " + prevDay + ": " + dayVisitors);
                 dayVisitors = 0;
                 if(day == 0) {
-                    System.out.println("Visitors in the last week: " + totalVisitors);
-                    totalVisitors = 0;
+                    System.out.println("Visitors total: " + totalVisitors);
+                    System.out.println("Minutes paid: " + moneyMade);
                 }
             }
         }
@@ -165,10 +166,14 @@ public class Simulator {
         int i=0;
         while (paymentCarQueue.carsInQueue()>0 && i < paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
-            //TODO: Handle payment.
+            handlePayment(car);
             carLeavesSpot(car);
             i++;
         }
+    }
+
+    private void handlePayment(Car car) {
+        moneyMade += car.getCredsToPay();
     }
 
     private void carsLeaving() {
