@@ -82,6 +82,8 @@ public class Simulator {
                 prevHour = 23;
             }
             System.out.println("Visitors between " + prevHour + " and " + hour + ": " + hourVisitors);
+            /*System.out.println("Queue numbers (reg/pass - res): " + entranceCarQueue.carsInQueue() + " / " + entrancePassQueue.carsInQueue() + " " + preResQueue.carsInQueue());
+            System.out.println("Number of open spots: " + numberOfOpenSpots);*/
             hourVisitors = 0;
             if(hour == 0) {
                 int prevDay = day - 1;
@@ -217,7 +219,8 @@ public class Simulator {
         for (int i=0; i<length; i++) {
             car = queue.removeCar();
             /* Cars don't mind to enter a longer queue since they have a guaranteed spot. */
-            if((random.nextFloat()*100) < car.getChanceToEnter()) {
+            if(entrancePassQueue.carsInQueue() < 7 && (random.nextFloat()*100) < car.getChanceToEnter()) {
+                numberOfOpenSpots++;
                 entrancePassQueue.addCar(car);
             } else {
                 int chance = car.getChanceToEnter();
@@ -229,7 +232,6 @@ public class Simulator {
                 }
             }
         }
-
     }
 
     /**
@@ -331,6 +333,7 @@ public class Simulator {
         double modifier = Math.sin((x/12 - 0.625)*Math.PI);
 
         double numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.5) + (averageNumberOfCarsPerHour * 0.6);
+
 
         double standardDeviation = numberOfCarsPerHour * 0.2;
         numberOfCarsPerHour += random.nextGaussian() * standardDeviation;
