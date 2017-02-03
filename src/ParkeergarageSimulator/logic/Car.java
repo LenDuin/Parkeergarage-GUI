@@ -9,6 +9,8 @@ public abstract class Car {
     private boolean hasToPay;
     private double fee;
 
+    private int credsToPay;
+
     /**
      * Constructor for objects of class Car
      */
@@ -103,5 +105,14 @@ public abstract class Car {
         minutesLeft--;
     }
 
+    public void setCredsToPay(int creds) {
+        this.credsToPay = creds;
+    }
+
+    public int getCredsToPay() {
+        return credsToPay;
+    }
+
     public abstract Color getColor();
+
 }

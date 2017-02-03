@@ -30,6 +30,7 @@ public class Simulator {
     private int hourVisitors;
     private int dayVisitors;
     private int totalVisitors;
+    private double moneyMade;
 
     private int weekDayArrivals = 100;
     private int weekendArrivals = 500;
@@ -41,7 +42,6 @@ public class Simulator {
     private int exitSpeed = 5;
 
     private double chargePerMinute = 0.07;
-    private double revenue;
 
     public Simulator(Car carsArr[][][], int spots, int rows, int floors) {
         entranceCarQueue = new CarQueue();
@@ -102,18 +102,18 @@ public class Simulator {
             if(prevHour < 0) {
                 prevHour = 23;
             }
-//            System.out.println("Visitors between " + prevHour + " and " + hour + ": " + hourVisitors);
+            System.out.println("Visitors between " + prevHour + " and " + hour + ": " + hourVisitors);
             hourVisitors = 0;
             if(hour == 0) {
                 int prevDay = day - 1;
                 if(prevDay < 0) {
                     prevDay = 6;
                 }
-//                System.out.println("Visitors on day " + prevDay + ": " + dayVisitors);
+                System.out.println("Visitors on day " + prevDay + ": " + dayVisitors);
                 dayVisitors = 0;
                 if(day == 0) {
-//                    System.out.println("Visitors in the last week: " + totalVisitors);
-                    totalVisitors = 0;
+                    System.out.println("Visitors total: " + totalVisitors);
+                    System.out.println("Minutes paid: " + moneyMade);
                 }
             }
         }
@@ -149,7 +149,6 @@ public class Simulator {
 
     private void advanceTime() {
         // Advance the time by one minute. Shamelessly copied from original project
-//        System.out.println(hour + ":" + minute + ", " + day);
         minute++;
         while (minute > 59) {
             minute -= 60;
@@ -218,11 +217,14 @@ public class Simulator {
         int i=0;
         while (paymentCarQueue.carsInQueue() > 0 && i < paymentSpeed) {
             Car car = paymentCarQueue.removeCar();
-            if (car.getFee() <= 0) {
-                carLeavesSpot(car);
-            }
+            handlePayment(car);
+            carLeavesSpot(car);
             i++;
         }
+    }
+
+    private void handlePayment(Car car) {
+        moneyMade += car.getCredsToPay();
     }
 
     private void carsLeaving() {
