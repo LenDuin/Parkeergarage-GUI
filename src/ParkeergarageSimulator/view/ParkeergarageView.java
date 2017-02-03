@@ -20,7 +20,7 @@ public class ParkeergarageView extends AbstractView{
             return;
         }
 
-        int hmargin = 5;
+        int hmargin = 10;
         int vmargin = 50;
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {

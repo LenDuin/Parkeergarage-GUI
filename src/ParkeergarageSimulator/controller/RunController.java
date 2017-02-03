@@ -22,13 +22,13 @@ public class RunController extends AbstractController implements ActionListener{
         setSize(450, 40);
         stepOne = new JButton("One step");
         stepOne.addActionListener(this);
-        stepsModel = new SpinnerNumberModel(1000,1,100000,1);
+        stepsModel = new SpinnerNumberModel(10080,1,100000,1);
         steps = new JSpinner(stepsModel);
         startSteps = new JButton("Start");
         startSteps.addActionListener(this);
         stopSteps = new JButton("Stop");
         stopSteps.addActionListener(this);
-        delayModel = new SpinnerNumberModel(10, 0, 1000, 10);
+        delayModel = new SpinnerNumberModel(1, 0, 1000, 10);
         delay = new JSpinner(delayModel);
 
         this.setLayout(null);

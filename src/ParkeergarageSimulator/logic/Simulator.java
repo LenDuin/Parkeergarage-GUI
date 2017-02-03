@@ -25,6 +25,10 @@ public class Simulator {
     private int numberOfPlaces;
     private int numberOfOpenSpots;
 
+    private int hourVisitors;
+    private int dayVisitors;
+    private int totalVisitors;
+
     private int weekDayArrivals = 100;
     private int weekendArrivals = 200;
     private int weekDayPassArrivals = 50;
@@ -51,6 +55,30 @@ public class Simulator {
         handleExit();
         handleEntrance();
         handleCarTime();
+        printInfo();
+    }
+
+    private void printInfo() {
+        if(minute == 0) {
+            int prevHour = hour-1;
+            if(prevHour < 0) {
+                prevHour = 23;
+            }
+            System.out.println("Visitors between " + prevHour + " and " + hour + ": " + hourVisitors);
+            hourVisitors = 0;
+            if(hour == 0) {
+                int prevDay = day - 1;
+                if(prevDay < 0) {
+                    prevDay = 6;
+                }
+                System.out.println("Visitors on day " + prevDay + ": " + dayVisitors);
+                dayVisitors = 0;
+                if(day == 0) {
+                    System.out.println("Visitors in the last week: " + totalVisitors);
+                    totalVisitors = 0;
+                }
+            }
+        }
     }
 
     private void handleCarTime() {
@@ -113,6 +141,9 @@ public class Simulator {
                 freeLocation = getFirstPassLocation();
             }
             setCarAt(freeLocation, car);
+            dayVisitors++;
+            hourVisitors++;
+            totalVisitors++;
             i++;
         }
     }
@@ -152,9 +183,13 @@ public class Simulator {
         Random random = new Random();
 
         int averageNumberOfCarsPerHour = day < 5 ? weekDay : weekend;
+        double x = hour + (minute * 0.0167);
+        double modifier = Math.sin((x/12 - 0.625)*Math.PI);
 
-        double standardDeviation = averageNumberOfCarsPerHour * 0.3;
-        double numberOfCarsPerHour = averageNumberOfCarsPerHour + random.nextGaussian() * standardDeviation;
+        double numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.5) + (averageNumberOfCarsPerHour * 0.6);
+
+        double standardDeviation = numberOfCarsPerHour * 0.2;
+        numberOfCarsPerHour += random.nextGaussian() * standardDeviation;
         return (int)Math.round(numberOfCarsPerHour / 60);
     }
 
@@ -284,4 +319,29 @@ public class Simulator {
         int place = location.getPlace();
         return !(floor < 0 || floor >= numberOfFloors || row < 0 || row > numberOfRows || place < 0 || place > numberOfPlaces);
     }
+
+    public int getDayVisitors() {
+        return dayVisitors;
+    }
+
+    public int getHourVisitors() {
+        return hourVisitors;
+    }
+
+    public int getTotalVisitors() {
+        return totalVisitors;
+    }
+
+    public int getMinute() {
+        return minute;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
 }
