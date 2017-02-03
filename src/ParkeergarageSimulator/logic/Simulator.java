@@ -14,6 +14,7 @@ public class Simulator {
     private int weekendPassArrivals = 0;
     private int weekDayResArrivals = 30;
     private int weekendResArrivals = 50;
+    private int peakArrivals = 120;
 
     private int enterSpeed = 3;
     private int paymentSpeed = 7;
@@ -82,8 +83,8 @@ public class Simulator {
                 prevHour = 23;
             }
             System.out.println("Visitors between " + prevHour + " and " + hour + ": " + hourVisitors);
-            /*System.out.println("Queue numbers (reg/pass - res): " + entranceCarQueue.carsInQueue() + " / " + entrancePassQueue.carsInQueue() + " " + preResQueue.carsInQueue());
-            System.out.println("Number of open spots: " + numberOfOpenSpots);*/
+            /*System.out.println("Queue numbers (reg/pass - res): " + entranceCarQueue.carsInQueue() + " / " + entrancePassQueue.carsInQueue() + " " + preResQueue.carsInQueue());*/
+            System.out.println("Number of open spots: " + numberOfOpenSpots);
             hourVisitors = 0;
             if(hour == 0) {
                 int prevDay = day - 1;
@@ -319,13 +320,13 @@ public class Simulator {
 
     /**
      * Gives the number of cars that arrives at a given moment. Uses a trigonometric function to simulate the ebb and
-     * flood of visitors every day with several small additions to account for certain peak moments.
+     * flood of visitors every day with several small additions to account for certain peak moments. Now with 100% more
+     * peaks during market day and theatre performances.
      * @param weekDay   Cars that arrive on average each hour on a weekday.
      * @param weekend   Cars that arrive on average each hour in the weekend.
      * @return  The number of cars that arrives during the given minute.
      */
     private int getNumberOfCars(int weekDay, int weekend) {
-        //TODO: Add regular spikes.
         Random random = new Random();
 
         int averageNumberOfCarsPerHour = day < 5 ? weekDay : weekend;
@@ -333,7 +334,19 @@ public class Simulator {
         double modifier = Math.sin((x/12 - 0.625)*Math.PI);
 
         double numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.5) + (averageNumberOfCarsPerHour * 0.6);
-
+        if(day==3) {
+            numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.7) + (averageNumberOfCarsPerHour * 0.8);
+        }
+        if((day == 4 || day == 5 ) && (hour > 20 && hour < 22)) {
+            x -= 20;
+            modifier = Math.sin(Math.PI*x/2);
+            numberOfCarsPerHour += modifier * peakArrivals;
+        }
+        if(day == 6 && (hour > 14 && hour < 16)) {
+            x -= 14;
+            modifier = Math.sin(Math.PI*x/2);
+            numberOfCarsPerHour += modifier * peakArrivals;
+        }
 
         double standardDeviation = numberOfCarsPerHour * 0.2;
         numberOfCarsPerHour += random.nextGaussian() * standardDeviation;
