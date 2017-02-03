@@ -30,7 +30,7 @@ public class Simulator {
     private int hourVisitors;
     private int dayVisitors;
     private int totalVisitors;
-    private double moneyMade;
+    private int moneyMade;
 
     private int weekDayArrivals = 100;
     private int weekendArrivals = 500;
@@ -42,6 +42,7 @@ public class Simulator {
     private int exitSpeed = 5;
 
     private double chargePerMinute = 0.07;
+    private double revenue;
 
     public Simulator(Car carsArr[][][], int spots, int rows, int floors) {
         entranceCarQueue = new CarQueue();
