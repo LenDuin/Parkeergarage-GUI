@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-public class LineGraph extends JPanel {
-    static int width = 630;
+public class OccupationGraph extends JPanel {
+    static int width = 1000;
     static int height = 400;
     int yDivisions = 10;
+    public static List<Double> values;
+    public static boolean visible = false;
     private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
     private int padding = 25;
     private int labelPadding = 25;
@@ -17,10 +19,9 @@ public class LineGraph extends JPanel {
     private Color lineColor = new Color(44,102,230,180);
     private Color pointColor = new Color(100,100,100,180);
     private Color gridColor = new Color(200,200,200,200);
-    private List<Double> values;
 
-    public LineGraph(List<Double> values) {
-        this.values = values;
+    private OccupationGraph(List<Double> values) {
+        OccupationGraph.values = values;
     }
 
     @Override
@@ -105,9 +106,9 @@ public class LineGraph extends JPanel {
 
         g2.setStroke(oldStroke);
         g2.setColor(pointColor);
-        for (int i = 0; i < graphPoints.size(); i++) {
-            int x = graphPoints.get(i).x - pointRadius;
-            int y = graphPoints.get(i).y - pointRadius;
+        for (Point graphPoint : graphPoints) {
+            int x = graphPoint.x - pointRadius;
+            int y = graphPoint.y - pointRadius;
             int ovalW = pointDiameter;
             int ovalH = pointDiameter;
             g2.fillOval(x, y, ovalW, ovalH);
@@ -131,7 +132,7 @@ public class LineGraph extends JPanel {
     }
 
     public void setValues(List<Double> values) {
-        this.values = values;
+        OccupationGraph.values = values;
         invalidate();
         this.repaint();
     }
@@ -140,19 +141,14 @@ public class LineGraph extends JPanel {
         return values;
     }
 
-    public static void draw(List<Double> values) {
-        int maxDataPoints = 40;
-        int maxScore = 10;
-        for (double value : values) {
-            values.add(value);
-        }
-        LineGraph graph = new LineGraph(values);
+    public static void draw() {
+        OccupationGraph graph = new OccupationGraph(values);
         graph.setPreferredSize(new Dimension(width, height));
         JFrame frame = new JFrame("Graph");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().add(graph);
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        frame.setVisible(visible);
     }
 }

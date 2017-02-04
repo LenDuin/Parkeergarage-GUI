@@ -1,6 +1,7 @@
 package ParkeergarageSimulator.logic;
 
 import ParkeergarageSimulator.controller.RunController;
+
 import java.util.*;
 
 public class Simulator {
@@ -25,7 +26,7 @@ public class Simulator {
     private CarQueue preResQueue;
     private CarQueue entranceCarQueue;
     private CarQueue entrancePassQueue;
-   private CarQueue paymentCarQueue;
+    private CarQueue paymentCarQueue;
     private CarQueue exitCarQueue;
 
     private int day = 0;
@@ -44,6 +45,7 @@ public class Simulator {
     private int hourVisitors;
     private int dayVisitors;
     private int totalVisitors;
+    private static List<Double> dayVisitorsList;
 
     private double revenue;
 
@@ -60,6 +62,8 @@ public class Simulator {
         numberOfRows = rows;
         numberOfFloors = floors;
         numberOfOpenSpots = numberOfPlaces * numberOfRows * numberOfFloors;
+
+        dayVisitorsList = new ArrayList<>();
     }
 
     /**
@@ -71,6 +75,10 @@ public class Simulator {
         handleEntrance();
         handleCarTime();
         printInfo();
+    }
+
+    public static List<Double> getDayVisitors() {
+        return dayVisitorsList;
     }
 
     /**
@@ -92,6 +100,7 @@ public class Simulator {
                     prevDay = 6;
                 }
                 System.out.println("Visitors on day " + prevDay + ": " + dayVisitors);
+                dayVisitorsList.add((double)dayVisitors);
                 dayVisitors = 0;
                 if(day == 0) {
                     System.out.println("Visitors total: " + totalVisitors);

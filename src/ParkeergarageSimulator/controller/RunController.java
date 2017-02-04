@@ -2,6 +2,7 @@ package ParkeergarageSimulator.controller;
 
 import ParkeergarageSimulator.exception.ParkeergarageException;
 import ParkeergarageSimulator.logic.*;
+import ParkeergarageSimulator.view.OccupationGraph;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -9,9 +10,11 @@ import java.text.ParseException;
 
 public class RunController extends AbstractController implements ActionListener{
     private static final long serialVersionUID = -8776795932665582315L;
+
     private JButton stepOne;
     private JButton startSteps;
     private JButton stopSteps;
+    private JButton showGraph;
     private JLabel delayLabel;
     private JLabel reservationsLabel;
     private JLabel clockLabel;
@@ -47,6 +50,8 @@ public class RunController extends AbstractController implements ActionListener{
         reservations = new JSpinner(reservationsModel);
         clockLabel = new JLabel("SimTime: ");
         clock = new JLabel("maandag, 00:00");
+        showGraph = new JButton("graph");
+        showGraph.addActionListener(this);
         if (!created) {
             createController();
         }
@@ -73,6 +78,7 @@ public class RunController extends AbstractController implements ActionListener{
         add(reservations);
         add(clockLabel);
         add(clock);
+        add(showGraph);
         stepOne.setBounds(x, y, width, height);
         steps.setBounds(x = width + 5, y, width, height);
         startSteps.setBounds(x * 2, y, width, height);
@@ -82,7 +88,8 @@ public class RunController extends AbstractController implements ActionListener{
         reservationsLabel.setBounds(x = x + width + 5, y, width, height);
         reservations.setBounds(x = x + width, y, width, height);
         clockLabel.setBounds(x = x + width + 5, y, width, height);
-        clock.setBounds(x + width - 30, y, width, height);
+        clock.setBounds(x = x + width - 30, y, width + 20, height);
+        showGraph.setBounds(x + width + 5, y, width, height);
         created = true;
     }
 
@@ -117,6 +124,11 @@ public class RunController extends AbstractController implements ActionListener{
         }
         if (e.getSource() == stopSteps) {
             logic.stopSteps();
+        }
+        if (e.getSource() == showGraph) {
+            OccupationGraph.visible = true;
+            OccupationGraph.values = Simulator.getDayVisitors();
+            OccupationGraph.draw();
         }
     }
 }

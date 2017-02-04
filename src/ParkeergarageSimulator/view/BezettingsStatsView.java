@@ -8,7 +8,6 @@ public class BezettingsStatsView extends AbstractView{
 
     public BezettingsStatsView(ParkeergarageLogic logic) {
         super(logic);
-        setSize(200,200);
     }
 
     public void paintComponent(Graphics g) {
