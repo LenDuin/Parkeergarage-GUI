@@ -40,10 +40,10 @@ public class RunController extends AbstractController implements ActionListener{
         stopSteps = new JButton("Stop");
         stopSteps.addActionListener(this);
         delayLabel = new JLabel("Delay: ");
-        delayModel = new SpinnerNumberModel(10, 0, 1000, 10);
+        delayModel = new SpinnerNumberModel(1, 0, 1000, 10);
         delay = new JSpinner(delayModel);
         reservationsLabel = new JLabel("Reservations: ");
-        reservationsModel = new SpinnerNumberModel(60, 0, 540, 10);
+        reservationsModel = new SpinnerNumberModel(120, 0, 540, 10);
         reservations = new JSpinner(reservationsModel);
         clockLabel = new JLabel("SimTime: ");
         clock = new JLabel("maandag, 00:00");

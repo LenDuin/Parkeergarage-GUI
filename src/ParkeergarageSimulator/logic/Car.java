@@ -8,8 +8,7 @@ public abstract class Car {
     private boolean isPaying;
     private boolean hasToPay;
     private double fee;
-
-    private int credsToPay;
+    private int chanceToEnter;
 
     /**
      * Constructor for objects of class Car
@@ -97,20 +96,20 @@ public abstract class Car {
         fee = minutesLeft * chargingRate;
     }
 
+    public int getChanceToEnter() {
+        return chanceToEnter;
+    }
+
+    public void setChanceToEnter(int chance) {
+        this.chanceToEnter = chance;
+    }
+
     /**
      * Ticks down the amount of minutes a car can stay
      * (not the most optimal way of doing this, by far)
      */
     public void tick() {
         minutesLeft--;
-    }
-
-    public void setCredsToPay(int creds) {
-        this.credsToPay = creds;
-    }
-
-    public int getCredsToPay() {
-        return credsToPay;
     }
 
     public abstract Color getColor();
