@@ -24,7 +24,6 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
 
     public void doStep() throws ParkeergarageException {
         calculateParkeergarage();
-        notifyViews();
     }
 
     public void doSteps(int numberOfSteps) throws ParkeergarageException {
@@ -62,7 +61,6 @@ public class ParkeergarageLogic extends AbstractModel implements Runnable {
     public void run() {
         for (int i = 0; i < numberOfSteps && run; i++) {
             calculateParkeergarage();
-            notifyViews();
             try {
                 Thread.sleep(RunController.getDelay());
             }

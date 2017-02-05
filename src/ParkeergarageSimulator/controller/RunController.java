@@ -2,7 +2,6 @@ package ParkeergarageSimulator.controller;
 
 import ParkeergarageSimulator.exception.ParkeergarageException;
 import ParkeergarageSimulator.logic.*;
-import ParkeergarageSimulator.view.OccupationGraph;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -14,14 +13,16 @@ public class RunController extends AbstractController implements ActionListener{
     private JButton stepOne;
     private JButton startSteps;
     private JButton stopSteps;
-    private JButton showGraph;
+
     private JLabel delayLabel;
     private JLabel reservationsLabel;
     private JLabel clockLabel;
     private static JLabel clock;
+
     private JSpinner steps;
     private static JSpinner delay;
     private static JSpinner reservations;
+
     private SpinnerModel stepsModel;
     private SpinnerModel delayModel;
     private SpinnerModel reservationsModel;
@@ -30,28 +31,37 @@ public class RunController extends AbstractController implements ActionListener{
     private int y = 0;
     private int width = 90;
     private int height = 35;
+
     private boolean created = false;
 
     public RunController(ParkeergarageLogic logic) {
         super(logic);
+        //JButtons
         stepOne = new JButton("One step");
-        stepOne.addActionListener(this);
-        stepsModel = new SpinnerNumberModel(10080,1,Integer.MAX_VALUE,100);
-        steps = new JSpinner(stepsModel);
         startSteps = new JButton("Start");
-        startSteps.addActionListener(this);
         stopSteps = new JButton("Stop");
-        stopSteps.addActionListener(this);
-        delayLabel = new JLabel("Delay: ");
+
+        //SpinnerModels
+        stepsModel = new SpinnerNumberModel(10080,1,Integer.MAX_VALUE,100);
         delayModel = new SpinnerNumberModel(1, 0, 1000, 10);
-        delay = new JSpinner(delayModel);
-        reservationsLabel = new JLabel("Reservations: ");
         reservationsModel = new SpinnerNumberModel(120, 0, 540, 10);
+
+        //JSpinners
+        steps = new JSpinner(stepsModel);
+        delay = new JSpinner(delayModel);
         reservations = new JSpinner(reservationsModel);
+
+        //JLabels
+        delayLabel = new JLabel("Delay: ");
+        reservationsLabel = new JLabel("Reservations: ");
         clockLabel = new JLabel("SimTime: ");
         clock = new JLabel("maandag, 00:00");
-        showGraph = new JButton("graph");
-        showGraph.addActionListener(this);
+
+        //actionListeners
+        stepOne.addActionListener(this);
+        startSteps.addActionListener(this);
+        stopSteps.addActionListener(this);
+
         if (!created) {
             createController();
         }
@@ -68,6 +78,7 @@ public class RunController extends AbstractController implements ActionListener{
 
     private void createController() {
         this.setLayout(null);
+
         add(stepOne);
         add(steps);
         add(startSteps);
@@ -78,7 +89,7 @@ public class RunController extends AbstractController implements ActionListener{
         add(reservations);
         add(clockLabel);
         add(clock);
-        add(showGraph);
+
         stepOne.setBounds(x, y, width, height);
         steps.setBounds(x = width + 5, y, width, height);
         startSteps.setBounds(x * 2, y, width, height);
@@ -89,7 +100,7 @@ public class RunController extends AbstractController implements ActionListener{
         reservations.setBounds(x = x + width, y, width, height);
         clockLabel.setBounds(x = x + width + 5, y, width, height);
         clock.setBounds(x = x + width - 30, y, width + 20, height);
-        showGraph.setBounds(x + width + 5, y, width, height);
+
         created = true;
     }
 
@@ -124,11 +135,6 @@ public class RunController extends AbstractController implements ActionListener{
         }
         if (e.getSource() == stopSteps) {
             logic.stopSteps();
-        }
-        if (e.getSource() == showGraph) {
-            OccupationGraph.visible = true;
-            OccupationGraph.values = Simulator.getDayVisitors();
-            OccupationGraph.draw();
         }
     }
 }

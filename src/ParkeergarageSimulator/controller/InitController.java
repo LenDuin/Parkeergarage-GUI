@@ -21,8 +21,8 @@ public class InitController extends AbstractController implements ActionListener
 
         this.setLayout(null);
         add(init);
-        int x = 10;
-        int y = 10;
+        int x = 5;
+        int y = 0;
         int width = 70;
         int height = 30;
         init.setBounds(x , y, width, height);
