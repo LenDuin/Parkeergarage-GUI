@@ -14,7 +14,6 @@ public class Simulator {
     private int weekendPassArrivals = 0;
     private int weekDayResArrivals = 30;
     private int weekendResArrivals = 50;
-    private int peakArrivals = 120;
 
     private int enterSpeed = 3;
     private int paymentSpeed = 7;
@@ -228,24 +227,26 @@ public class Simulator {
      * @param queue The "potential arrival" queue.
      */
     private void carsTryingToEnQueue(CarQueue queue) {
-        //TODO: Make actually enqueueing chance-based. New method?
         Random random = new Random();
         Car car;
         int length = queue.carsInQueue();
         for (int i=0; i<length; i++) {
             car = queue.removeCar();
-            /* Cars don't mind to enter a longer queue since they have a guaranteed spot. */
-            if(entrancePassQueue.carsInQueue() < 7 && (random.nextFloat()*100) < car.getChanceToEnter()) {
-                numberOfOpenSpots++;
-                entrancePassQueue.addCar(car);
-            } else {
-                int chance = car.getChanceToEnter();
-                if (chance < 90) {
-                    car.setChanceToEnter(chance+2);
-                    queue.addCar(car);
-                } else {
+            if(carWantsToEnqueue(entrancePassQueue.carsInQueue())) {
+                if((random.nextFloat()*100) < car.getChanceToEnter()) {
                     numberOfOpenSpots++;
+                    entrancePassQueue.addCar(car);
+                } else {
+                    int chance = car.getChanceToEnter();
+                    if (chance < 90) {
+                        car.setChanceToEnter(chance+2);
+                        queue.addCar(car);
+                    } else {
+                        numberOfOpenSpots++;
+                    }
                 }
+            } else {
+                numberOfOpenSpots++;
             }
         }
     }
@@ -335,8 +336,7 @@ public class Simulator {
 
     /**
      * Gives the number of cars that arrives at a given moment. Uses a trigonometric function to simulate the ebb and
-     * flood of visitors every day with several small additions to account for certain peak moments. Now with 100% more
-     * peaks during market day and theatre performances.
+     * flood of visitors every day with several small additions to account for certain peak moments.
      * @param weekDay   Cars that arrive on average each hour on a weekday.
      * @param weekend   Cars that arrive on average each hour in the weekend.
      * @return  The number of cars that arrives during the given minute.
@@ -348,20 +348,17 @@ public class Simulator {
         double x = hour + (minute * 0.0167);
         double modifier = Math.sin((x/12 - 0.625)*Math.PI);
 
-        double numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.5) + (averageNumberOfCarsPerHour * 0.6);
+        double numberOfCarsPerHour;
         if(day==3) {
-            numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.7) + (averageNumberOfCarsPerHour * 0.8);
+            modifier = modifier * 1.4;
         }
         if((day == 4 || day == 5 ) && (hour > 20 && hour < 22)) {
-            x -= 20;
-            modifier = Math.sin(Math.PI*x/2);
-            numberOfCarsPerHour += modifier * peakArrivals;
+            modifier = modifier*1.5;
         }
         if(day == 6 && (hour > 14 && hour < 16)) {
-            x -= 14;
-            modifier = Math.sin(Math.PI*x/2);
-            numberOfCarsPerHour += modifier * peakArrivals;
+            modifier = modifier*1.2;
         }
+        numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.5) + (averageNumberOfCarsPerHour * 0.6);
 
         double standardDeviation = numberOfCarsPerHour * 0.2;
         numberOfCarsPerHour += random.nextGaussian() * standardDeviation;
@@ -375,18 +372,17 @@ public class Simulator {
      * @param type          The type (AD_HOC, PASS or RESERVATION) to determine which queue they need to join etc.
      */
     private void addArrivingCars(int numberOfCars, String type) {
-        //TODO: Make joining queues chance-based. New method?
         switch(type) {
             case AD_HOC:
                 for (int i=0; i<numberOfCars; i++) {
-                    if(entranceCarQueue.carsInQueue() < 7) {
+                    if(carWantsToEnqueue(entranceCarQueue.carsInQueue())) {
                         entranceCarQueue.addCar(new AdHocCar());
                     }
                 }
                 break;
             case PASS:
                 for (int i=0; i<numberOfCars; i++) {
-                    if(entrancePassQueue.carsInQueue() < 7) {
+                    if(carWantsToEnqueue(entrancePassQueue.carsInQueue())) {
                         entrancePassQueue.addCar(new ParkingPassCar());
                     }
                 }
@@ -397,6 +393,21 @@ public class Simulator {
                     numberOfOpenSpots--;
                 }
                 break;
+        }
+    }
+
+    /**
+     * Returns a boolean to determine whether a car wants to enqueue.
+     * @param length    Length of the pre-existing queue.
+     * @return          TRUE if a car wants to enqueue, FALSE if they don't.
+     */
+    private boolean carWantsToEnqueue(int length) {
+        if (length <= 4) {
+            return true;
+        } else {
+           Random random = new Random();
+           double chance = 1/Math.pow(2,(length-4));
+           return (chance <= random.nextDouble());
         }
     }
 
