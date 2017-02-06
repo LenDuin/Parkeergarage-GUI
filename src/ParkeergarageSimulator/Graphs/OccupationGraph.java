@@ -19,9 +19,11 @@ public class OccupationGraph extends JPanel {
     private Color lineColor = new Color(44,102,230,180);
     private Color pointColor = new Color(100,100,100,180);
     private Color gridColor = new Color(200,200,200,200);
+    private static JFrame frame;
 
     private OccupationGraph(List<Double> values) {
         OccupationGraph.values = values;
+        frame = new JFrame("Occupation Graph");
     }
 
     @Override
@@ -147,11 +149,13 @@ public class OccupationGraph extends JPanel {
     public static void draw() {
         OccupationGraph graph = new OccupationGraph(values);
         graph.setPreferredSize(new Dimension(width, height));
-        JFrame frame = new JFrame("Occupation Graph");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().add(graph);
         frame.pack();
-        frame.setLocationRelativeTo(null);
         frame.setVisible(visible);
+    }
+
+    public static void redraw() {
+
     }
 }

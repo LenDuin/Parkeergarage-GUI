@@ -1,5 +1,6 @@
 package ParkeergarageSimulator.logic;
 
+import ParkeergarageSimulator.Graphs.OccupationGraph;
 import ParkeergarageSimulator.controller.RunController;
 import java.util.*;
 
@@ -14,6 +15,7 @@ public class Simulator {
     private int weekendPassArrivals = 0;
     private int weekDayResArrivals = 30;
     private int weekendResArrivals = 50;
+    private int peakArrivals = 120;
 
     private int enterSpeed = 3;
     private int paymentSpeed = 7;
@@ -79,6 +81,9 @@ public class Simulator {
         handleEntrance();
         handleCarTime();
         printInfo();
+        if (OccupationGraph.visible) {
+            OccupationGraph.redraw();
+        }
     }
 
     public static List<Double> getDayVisitors() {
@@ -343,6 +348,7 @@ public class Simulator {
      */
     private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();
+        int toAdd = 0;
 
         int averageNumberOfCarsPerHour = day < 5 ? weekDay : weekend;
         double x = hour + (minute * 0.0167);
@@ -353,12 +359,14 @@ public class Simulator {
             modifier = modifier * 1.4;
         }
         if((day == 4 || day == 5 ) && (hour > 20 && hour < 22)) {
-            modifier = modifier*1.5;
+            x -= 20;
+            toAdd = (int) (Math.sin((x/2)*Math.PI)) * peakArrivals;
         }
         if(day == 6 && (hour > 14 && hour < 16)) {
-            modifier = modifier*1.2;
+            x-=14;
+            toAdd = (int) (Math.sin((x/2)*Math.PI)) * peakArrivals;
         }
-        numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.5) + (averageNumberOfCarsPerHour * 0.6);
+        numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.5) + (averageNumberOfCarsPerHour * 0.6) + toAdd;
 
         double standardDeviation = numberOfCarsPerHour * 0.2;
         numberOfCarsPerHour += random.nextGaussian() * standardDeviation;

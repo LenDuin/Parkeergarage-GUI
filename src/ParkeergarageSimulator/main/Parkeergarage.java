@@ -39,7 +39,7 @@ public class Parkeergarage {
         screen.setVisible(true);
     }
 
-    public void createButtons() {
+    private void createButtons() {
         runController = new RunController(logic);
         screen.getContentPane().add(runController);
         runController.setBounds(5,5, 865,50);
