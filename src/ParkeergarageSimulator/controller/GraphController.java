@@ -21,6 +21,10 @@ public class GraphController extends AbstractController implements ActionListene
     private int width = 200;
     private int height = 30;
 
+    /**
+     * the class which is only there to create the buttons to show the graphs we currently have
+     * @param logic the big, all-encapsulating logic thing that is basically the entire simulator
+     */
     public GraphController(ParkeergarageLogic logic) {
         super(logic);
 
@@ -42,6 +46,10 @@ public class GraphController extends AbstractController implements ActionListene
         dayRevenue.addActionListener(this);
     }
 
+    /**
+     * this method checks which of the buttons has been pressed
+     * @param e an action event which can have two different value for now, occupation or revenue
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == dayOccupation) {

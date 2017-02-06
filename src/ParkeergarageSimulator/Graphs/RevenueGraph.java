@@ -20,10 +20,19 @@ public class RevenueGraph extends JPanel {
     private Color pointColor = new Color(100,100,100,180);
     private Color gridColor = new Color(200,200,200,200);
 
+    /**
+     * Constructor for the revenue graph
+     * @param values a list-object that contains all values for the graph
+     */
     private RevenueGraph(List<Double> values) {
         RevenueGraph.values = values;
     }
 
+    /**
+     * [duplicate code in OccupationGraph]
+     * an custom iteration of the Graphics.paintComponent() method, this creates the entire graph
+     * @param g a Graphics-object which is defined in the code below
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -74,6 +83,10 @@ public class RevenueGraph extends JPanel {
         }
     }
 
+    /**
+     * creates the grid which is to de drawn
+     * @param g2 a 2d graphics thing
+     */
     private void createGrid(Graphics2D g2) {
         for (int i = 0; i < yDivisions + 1; i++) {
             int x0 = padding + labelPadding;
@@ -114,6 +127,10 @@ public class RevenueGraph extends JPanel {
         }
     }
 
+    /**
+     * gets the
+     * @return
+     */
     private double getMaxValue() {
         double maxValue = Double.MIN_VALUE;
         for (Double score : values) {

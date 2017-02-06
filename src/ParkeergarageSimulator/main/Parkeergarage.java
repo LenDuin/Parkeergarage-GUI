@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import static ParkeergarageSimulator.controller.InitController.*;
 
+
 public class Parkeergarage {
     private JFrame screen;
     private ParkeergarageLogic logic;;
@@ -16,6 +17,9 @@ public class Parkeergarage {
     private AbstractController runController;
     private AbstractController graphController;
 
+    /**
+     * This will create the window that will contain all buttons and number thingies
+     */
     public Parkeergarage() {
         logic = new ParkeergarageLogic();
         screen = new JFrame("Parking Lot Simulator");
@@ -39,6 +43,9 @@ public class Parkeergarage {
         screen.setVisible(true);
     }
 
+    /**
+     * and additional method to make stuff clearer
+     */
     private void createButtons() {
         runController = new RunController(logic);
         screen.getContentPane().add(runController);
