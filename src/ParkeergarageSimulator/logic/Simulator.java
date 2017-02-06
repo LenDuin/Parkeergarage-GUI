@@ -348,7 +348,10 @@ public class Simulator {
      */
     private int getNumberOfCars(int weekDay, int weekend) {
         Random random = new Random();
-        int toAdd = 0;
+        double toAdd = 0;
+        if(weekend == 0 && day >= 5) {
+            return 0;
+        }
 
         int averageNumberOfCarsPerHour = day < 5 ? weekDay : weekend;
         double x = hour + (minute * 0.0167);
@@ -360,11 +363,11 @@ public class Simulator {
         }
         if((day == 4 || day == 5 ) && (hour > 20 && hour < 22)) {
             x -= 20;
-            toAdd = (int) (Math.sin((x/2)*Math.PI)) * peakArrivals;
+            toAdd = 1.5 * (Math.sin((x/2)*Math.PI)) * peakArrivals;
         }
         if(day == 6 && (hour > 14 && hour < 16)) {
             x-=14;
-            toAdd = (int) (Math.sin((x/2)*Math.PI)) * peakArrivals;
+            toAdd = 1.5 * (Math.sin((x/2)*Math.PI)) * peakArrivals;
         }
         numberOfCarsPerHour = (modifier * averageNumberOfCarsPerHour * 0.5) + (averageNumberOfCarsPerHour * 0.6) + toAdd;
 
