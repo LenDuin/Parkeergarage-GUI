@@ -13,7 +13,10 @@ public class ParkeergarageView extends AbstractView{
     public ParkeergarageView(ParkeergarageLogic logic) {
         super(logic);
     }
-
+    /**
+     * an custom iteration of the Graphics.paintComponent() method, this creates the entire graph
+     * @param g a Graphics-object which is defined in the code below
+     */
     public void paintComponent(Graphics g) {
         Car[][][] state = logic.getState();
 
