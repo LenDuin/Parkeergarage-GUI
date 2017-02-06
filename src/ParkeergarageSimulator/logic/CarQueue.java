@@ -2,7 +2,9 @@ package ParkeergarageSimulator.logic;
 
 import java.util.LinkedList;
 import java.util.Queue;
-
+/**
+ * @author Samet Inci, I take no credit for the code, only for the addition of JavaDoc
+ */
 public class CarQueue {
     private Queue<Car> queue = new LinkedList<>();
 

@@ -1,5 +1,8 @@
 package ParkeergarageSimulator.logic;
 
+/**
+ * @author Samet Inci, I take no credit for the code, only for the addition of JavaDoc
+ */
 public class Location {
     private int floor;
     private int row;

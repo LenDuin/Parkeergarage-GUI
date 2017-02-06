@@ -6,6 +6,10 @@ import java.awt.*;
 public class ParkeergarageView extends AbstractView{
     private static final long serialVersionUID = -8200251211832614969L;
 
+    /**
+     * the class which show the parking garage view
+     * @param logic the big, all-encapsulating logic thing that is basically the entire simulator
+     */
     public ParkeergarageView(ParkeergarageLogic logic) {
         super(logic);
     }

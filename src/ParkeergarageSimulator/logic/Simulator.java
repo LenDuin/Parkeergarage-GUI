@@ -3,7 +3,9 @@ package ParkeergarageSimulator.logic;
 import ParkeergarageSimulator.Graphs.OccupationGraph;
 import ParkeergarageSimulator.controller.RunController;
 import java.util.*;
-
+/**
+ * @author Samet Inci, I take no credit for the code, only for the addition of JavaDoc
+ */
 public class Simulator {
     private static final String AD_HOC = "1";
     private static final String PASS = "2";
