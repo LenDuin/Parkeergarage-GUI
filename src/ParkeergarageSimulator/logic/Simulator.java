@@ -1,5 +1,6 @@
 package ParkeergarageSimulator.logic;
 
+import ParkeergarageSimulator.Graphs.OccupationGraph;
 import ParkeergarageSimulator.controller.RunController;
 import java.util.*;
 
@@ -80,6 +81,9 @@ public class Simulator {
         handleEntrance();
         handleCarTime();
         printInfo();
+        if (OccupationGraph.visible) {
+            OccupationGraph.redraw();
+        }
     }
 
     public static List<Double> getDayVisitors() {
