@@ -26,7 +26,7 @@ public class GraphController extends AbstractController implements ActionListene
 
         label = new JLabel("Graphs: ");
         dayOccupation = new JButton("Daily Occupation");
-        dayRevenue = new JButton("Daily Revenue");
+        dayRevenue = new JButton("Total Revenue");
 
         this.setLayout(null);
 

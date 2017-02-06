@@ -54,7 +54,7 @@ public class OccupationGraph extends JPanel {
 
         createGrid(g2);
 
-        //and now we create them
+        //and now we create the lines
         g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, padding + labelPadding, padding);
         g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, getWidth() - padding, getHeight() - padding - labelPadding);
 
@@ -81,6 +81,7 @@ public class OccupationGraph extends JPanel {
     }
 
     private void createGrid(Graphics2D g2) {
+        //set grid for yAxis
         for (int i = 0; i < yDivisions + 1; i++) {
             int x0 = padding + labelPadding;
             int x1 = pointDiameter + padding + labelPadding;
