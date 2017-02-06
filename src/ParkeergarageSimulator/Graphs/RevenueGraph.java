@@ -128,8 +128,8 @@ public class RevenueGraph extends JPanel {
     }
 
     /**
-     * gets the
-     * @return
+     * gets the maximum values for the graph scale
+     * @return the maximum value in values
      */
     private double getMaxValue() {
         double maxValue = Double.MIN_VALUE;
@@ -139,6 +139,10 @@ public class RevenueGraph extends JPanel {
         return maxValue;
     }
 
+    /**
+     * gets the minimum values for the graph scale
+     * @return the minimum value in values
+     */
     private double getMinValue() {
         double minValue = Double.MAX_VALUE;
         for (Double score : values) {
@@ -147,16 +151,28 @@ public class RevenueGraph extends JPanel {
         return minValue;
     }
 
+    /**
+     * might set values for the values list if used
+     * @param values all values for the values list as a list object
+     */
     public void setValues(List<Double> values) {
         RevenueGraph.values = values;
         invalidate();
         this.repaint();
     }
 
+    /**
+     * and this is a getter for the values list
+     * @return a list object containing all values in values
+     */
     public List<Double> getValues() {
         return values;
     }
 
+    /**
+     * creates the window for the graph with the graph in it, unfortunately this does not update automatically
+     * I was thinking about adding this, but alas...
+     */
     public static void draw() {
         RevenueGraph graph = new RevenueGraph(values);
         graph.setPreferredSize(new Dimension(width, height));

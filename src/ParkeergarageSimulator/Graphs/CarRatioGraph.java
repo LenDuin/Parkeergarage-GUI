@@ -4,6 +4,12 @@ import ParkeergarageSimulator.logic.*;
 import ParkeergarageSimulator.view.AbstractView;
 import java.awt.*;
 
+/**
+ * this might seem to be something useful, but it isn't.
+ * this is a concept for a piechart to display the ratio of unused spots and reservations and so on
+ * unused because it did not update an we couldn't figure it out in time
+ */
+
 public class CarRatioGraph extends AbstractView{
     private static final long serialVersionUID = -5554778963215545226L;
     private int totalCars;

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+/**
+ * for more javadoc on this I suggest looking at the RevenueGraph and replacing every RevenueGraph with OccupationGraph
+ * #codeduplicationforthewin
+ */
+
 public class OccupationGraph extends JPanel {
     public static List<Double> values;
     public static boolean visible = false;
