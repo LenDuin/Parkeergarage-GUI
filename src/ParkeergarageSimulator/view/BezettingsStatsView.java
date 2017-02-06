@@ -1,11 +1,19 @@
 package ParkeergarageSimulator.view;
 
-import java.awt.*;
-import ParkeergarageSimulator.logic.*;
+import ParkeergarageSimulator.logic.ParkeergarageLogic;
 
+import java.awt.*;
+/**
+ * [UNUSED]
+ * intended for showing the graphs in the main window, but after deciding that new windows are more useful we ditched this
+ */
 public class BezettingsStatsView extends AbstractView{
     private static final long serialVersionUID = -7891669840482084995L;
 
+    /**
+     * the class which is the base for the views
+     * @param logic the big, all-encapsulating logic thing that is basically the entire simulator
+     */
     public BezettingsStatsView(ParkeergarageLogic logic) {
         super(logic);
     }
