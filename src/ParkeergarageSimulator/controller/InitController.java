@@ -15,7 +15,7 @@ public class InitController extends AbstractController implements ActionListener
      */
     public InitController(ParkeergarageLogic logic) {
         super(logic);
-        init = new JButton("Init");
+        init = new JButton("Reset");
 
         init.addActionListener(this);
 

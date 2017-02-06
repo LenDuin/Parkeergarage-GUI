@@ -19,6 +19,8 @@ public class ParkeergarageView extends AbstractView{
 
         int hmargin = 10;
         int vmargin = 50;
+        g.setColor(Color.decode("#dddddd"));
+        g.fillRoundRect(0, 0, 1000, 1000, 10, 10);
         for (int i = 0; i < state.length; i++) {
             for (int j = 0; j < state[i].length; j++) {
                 if (i > 0 && j == 0) {
