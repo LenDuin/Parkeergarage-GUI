@@ -6,6 +6,15 @@ import java.awt.*;
 public class ReservationCar extends Car {
     private static final Color COLOR = Color.green;
 
+    /**
+     *
+     * The constructor  of this class where it creates the cars randomly for people that reserved parking places.
+     * The people that have parking pass must pay for the reserved spot and for how many hours it staid on the place
+     *
+     *
+     *
+     */
+
     public ReservationCar() {
         Random random = new Random();
 
@@ -15,6 +24,12 @@ public class ReservationCar extends Car {
         this.setChanceToEnter(0);
     }
 
+    /**
+     * this method changes the color of the cars that have reserved parking spots
+     *
+     *
+     *@return change the colors of the cars that have reserved parking spots
+     */
     public Color getColor(){
         return COLOR;
     }

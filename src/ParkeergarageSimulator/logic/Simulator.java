@@ -54,6 +54,7 @@ public class Simulator {
         return dayRevenueList;
     }
 
+
     public Simulator(Car carsArr[][][], int spots, int rows, int floors) {
         preResQueue = new CarQueue();
 
@@ -84,8 +85,12 @@ public class Simulator {
         if (OccupationGraph.visible) {
             OccupationGraph.redraw();
         }
-    }
-
+    }/**
+     * This method shows how many cars arrived daily
+     *
+     *
+     *@return how many vistors have arrived daily
+     */
     public static List<Double> getDayVisitors() {
         return dayVisitorsList;
     }
